@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fee Structure — Vertex Tech Solutions</title>
+<meta name="description" content="Simple, transparent, performance-based fees. 8.33% of first-year salary. You only pay when a candidate successfully joins your team." />
+<link rel="stylesheet" href="shared.css" />
+<style>
+/* FEE HERO CARD */
+.fee-hero-section { background: var(--white); }
+.fee-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+.fee-main-card {
+  background: var(--dark); border-radius: var(--radius-lg);
+  padding: 3rem; position: relative; overflow: hidden;
+}
+.fee-main-card::before {
+  content: ''; position: absolute;
+  top: -60px; right: -60px; width: 260px; height: 260px;
+  background: var(--red); opacity: 0.1; border-radius: 30px; transform: rotate(25deg);
+}
+.fee-main-card::after {
+  content: ''; position: absolute;
+  bottom: -40px; left: -40px; width: 160px; height: 160px;
+  background: var(--red); opacity: 0.06; border-radius: 20px; transform: rotate(15deg);
+}
+.fee-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.75rem; position: relative; z-index: 1; }
+.fee-number {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 6rem; color: var(--red); line-height: 1;
+  margin-bottom: 0.4rem; position: relative; z-index: 1;
+}
+.fee-sublabel { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 2rem; position: relative; z-index: 1; }
+.fee-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 2rem; position: relative; z-index: 1; }
+.fee-bullets { list-style: none; display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
+.fee-bullets li {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.65;
+}
+.fee-bullets li::before {
+  content: '✓'; flex-shrink: 0; width: 20px; height: 20px;
+  background: var(--red); border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: 700; color: white; margin-top: 2px;
+}
+
+/* FEE DETAILS LIST */
+.fee-details-list { display: flex; flex-direction: column; gap: 16px; }
+.fee-detail-card {
+  background: var(--off-white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem 1.75rem;
+  display: flex; gap: 1.25rem; align-items: flex-start;
+  transition: var(--transition);
+}
+.fee-detail-card:hover { border-color: var(--red); box-shadow: 0 4px 20px rgba(230,57,70,0.08); }
+.fee-detail-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.4rem; }
+.fee-detail-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* COMPARISON */
+.comparison-section { background: var(--off-white); }
+.comparison-table-wrap { margin-top: 3rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.comparison-table { width: 100%; border-collapse: collapse; }
+.comparison-table thead tr { background: var(--dark); }
+.comparison-table thead th {
+  padding: 1.1rem 1.5rem; text-align: left; font-size: 14px;
+  font-weight: 600; color: white;
+}
+.comparison-table thead th:first-child { color: rgba(255,255,255,0.5); font-weight: 400; }
+.comparison-table thead th.highlight { color: var(--red); }
+.comparison-table tbody tr { border-bottom: 1px solid var(--border); background: var(--white); }
+.comparison-table tbody tr:last-child { border-bottom: none; }
+.comparison-table tbody tr:nth-child(even) { background: var(--off-white); }
+.comparison-table td { padding: 1rem 1.5rem; font-size: 14px; color: var(--muted); }
+.comparison-table td:first-child { font-weight: 500; color: var(--dark); }
+.comparison-table td.good { color: #16a34a; font-weight: 600; }
+.comparison-table td.bad { color: #ef4444; }
+.comparison-table td.highlight-col { font-weight: 600; color: var(--dark); background: rgba(230,57,70,0.04); }
+
+/* FAQ */
+.faq-section { background: var(--white); }
+.faq-list { max-width: 720px; margin-top: 3rem; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  width: 100%; text-align: left; padding: 1.25rem 0;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 15px; font-weight: 600; color: var(--dark);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-sans); gap: 1rem;
+}
+.faq-q::after {
+  content: '+'; font-size: 1.5rem; color: var(--red);
+  flex-shrink: 0; transition: transform 0.25s;
+}
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a {
+  display: none; font-size: 14px; color: var(--muted); line-height: 1.8;
+  padding-bottom: 1.25rem;
+}
+.faq-item.open .faq-a { display: block; }
+
+@media (max-width: 900px) {
+  .fee-hero-grid { grid-template-columns: 1fr; }
+  .comparison-table-wrap { overflow-x: auto; }
+}
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark"><span>V</span></div>
+    <span class="nav-logo-text">Vertex Tech</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="fees.html">Fees</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get in touch</a>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper">
+
+<div class="page-hero">
+  <div class="page-hero-shape" style="width:380px;height:380px;top:-80px;right:-80px;transform:rotate(28deg);"></div>
+  <div class="page-hero-inner">
+    <div class="badge" style="margin-bottom:1.25rem">Pricing</div>
+    <h1>Simple, transparent,<br><em>performance-based</em></h1>
+    <p>One fee. No retainers. No surprises. You pay only when a candidate successfully joins your team.</p>
+  </div>
+</div>
+
+<!-- FEE HERO -->
+<section class="section fee-hero-section">
+  <div class="container">
+    <div class="fee-hero-grid">
+      <div class="fee-main-card" data-reveal>
+        <div class="fee-label">Our placement fee</div>
+        <div class="fee-number" data-count="8.33" data-suffix="%">8.33%</div>
+        <div class="fee-sublabel">of the successfully placed candidate's first-year gross salary</div>
+        <div class="fee-divider"></div>
+        <ul class="fee-bullets">
+          <li>Charged only after candidate joins your team</li>
+          <li>Applies to the first-year gross salary agreed at offer</li>
+          <li>Covers the full recruitment process, end-to-end</li>
+          <li>No hidden costs, admin fees, or retainers</li>
+          <li>Same rate across all service types</li>
+        </ul>
+      </div>
+
+      <div class="fee-details-list" data-reveal data-reveal-delay="150">
+        <div class="fee-detail-card">
+          <div class="icon-box icon-box-red">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>90-Day Replacement Guarantee</h4>
+            <p>If a placed candidate leaves or doesn't work out within 90 days of joining, we'll find a replacement for free. No debate, no extra charge.</p>
+          </div>
+        </div>
+        <div class="fee-detail-card">
+          <div class="icon-box icon-box-red">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4>No Upfront Payment Required</h4>
+            <p>We start working on your role immediately — no deposit, no retainer. The fee is invoiced only once your new hire officially starts.</p>
+          </div>
+        </div>
+        <div class="fee-detail-card">
+          <div class="icon-box icon-box-red">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h4>Flexible Commercial Terms</h4>
+            <p>For high-volume or long-term partnerships, we're open to custom fee arrangements. Let's talk and find a structure that works for you.</p>
+          </div>
+        </div>
+        <div class="fee-detail-card">
+          <div class="icon-box icon-box-red">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4>Performance Tied Model</h4>
+            <p>Because we only earn when you succeed, we're entirely motivated to find you the right person — not just a fast fill.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section comparison-section">
+  <div class="container">
+    <span class="section-tag">How we compare</span>
+    <h2 class="section-heading">Vertex Tech vs. the industry</h2>
+    <div class="comparison-table-wrap" data-reveal>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="highlight">Vertex Tech Solutions</th>
+            <th>Traditional Agencies</th>
+            <th>Job Boards</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Upfront payment</td>
+            <td class="good highlight-col">None</td>
+            <td class="bad">Retainer required</td>
+            <td class="bad">Subscription fee</td>
+          </tr>
+          <tr>
+            <td>Fee structure</td>
+            <td class="highlight-col">8.33% on success</td>
+            <td>15–25% upfront</td>
+            <td>Flat fee per post</td>
+          </tr>
+          <tr>
+            <td>Replacement guarantee</td>
+            <td class="good highlight-col">90 days, free</td>
+            <td class="bad">Varies / none</td>
+            <td class="bad">None</td>
+          </tr>
+          <tr>
+            <td>Candidate screening</td>
+            <td class="good highlight-col">Full vetting included</td>
+            <td>Partial</td>
+            <td class="bad">None</td>
+          </tr>
+          <tr>
+            <td>Executive search</td>
+            <td class="good highlight-col">✓ Included</td>
+            <td>Extra fee</td>
+            <td class="bad">Not available</td>
+          </tr>
+          <tr>
+            <td>Dedicated recruiter</td>
+            <td class="good highlight-col">✓ One point of contact</td>
+            <td>Varies</td>
+            <td class="bad">None</td>
+          </tr>
+          <tr>
+            <td>Response SLA</td>
+            <td class="good highlight-col">1 business day</td>
+            <td>2–5 days</td>
+            <td class="bad">None</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="container">
+    <span class="section-tag">Questions</span>
+    <h2 class="section-heading">Frequently asked<br>about our fees</h2>
+    <div class="faq-list" data-reveal>
+
+      <div class="faq-item">
+        <button class="faq-q">When exactly is the fee charged?</button>
+        <div class="faq-a">The fee is invoiced once the candidate's start date is confirmed and they have formally joined your organisation. No invoice is raised prior to that event.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What if the candidate negotiates a different salary to the initial offer?</button>
+        <div class="faq-a">The fee is calculated on the final agreed first-year gross salary at the time the offer is accepted. If the salary changes between offer and start, we'll agree the correct calculation with you transparently.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">How does the 90-day guarantee work exactly?</button>
+        <div class="faq-a">If a placed candidate resigns, is dismissed for performance reasons, or both parties decide the fit isn't right within the first 90 days of employment, we will re-run the search and place a suitable replacement candidate at no additional charge.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Is the fee rate the same for senior / executive roles?</button>
+        <div class="faq-a">Yes — our standard rate of 8.33% applies across all service types, including executive search. For high-volume engagements or multi-role projects, we're open to discussing a custom arrangement.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What is excluded from the fee?</button>
+        <div class="faq-a">The fee covers the full recruitment process including sourcing, screening, shortlisting, and coordination. Third-party costs like psychometric assessments or background verification through external providers would be discussed and agreed separately if required.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Can we work on a retained basis for a large project?</button>
+        <div class="faq-a">Absolutely. For organisations looking to make multiple hires over a defined period, we can structure a retained partnership with customised terms. Get in touch to discuss your specific needs.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="background:var(--red);padding:4rem 2rem;text-align:center">
+  <h2 style="font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:white;margin-bottom:1rem;letter-spacing:-0.02em">Zero risk to get started</h2>
+  <p style="font-size:17px;color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto 2rem">No upfront payments. No retainers. Pay only when you hire. Let's talk about your next role.</p>
+  <a href="contact.html" class="btn" style="background:white;color:var(--red)">Start a conversation →</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="mark"><span>V</span></div>
+        <div class="name">Vertex Tech</div>
+      </div>
+      <p class="footer-brand-desc">Premier recruitment services — we find the people who move your business forward.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="fees.html">Fees</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Talent Acquisition</a></li>
+        <li><a href="services.html">Executive Search</a></li>
+        <li><a href="services.html">Candidate Screening</a></li>
+        <li><a href="services.html">Temporary Staffing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a></li>
+        <li><a href="tel:9909900988">9909900988</a></li>
+        <li><a href="http://www.vertextechsolution.in" target="_blank">vertextechsolution.in</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Vertex Tech Solutions. All rights reserved.</span>
+    <a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a>
+  </div>
+</footer>
+</div>
+
+<script src="shared.js"></script>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

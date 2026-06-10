@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Us — Vertex Tech Solutions</title>
+<meta name="description" content="Get in touch with Vertex Tech Solutions. Tell us about the role you're hiring for and we'll respond within one business day." />
+<link rel="stylesheet" href="shared.css" />
+<style>
+/* CONTACT LAYOUT */
+.contact-section { background: var(--white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+
+/* INFO SIDE */
+.contact-info-block { display: flex; flex-direction: column; gap: 14px; }
+.contact-info-card {
+  background: var(--off-white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  display: flex; gap: 1rem; align-items: center;
+  transition: var(--transition);
+}
+.contact-info-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(230,57,70,0.08); }
+.contact-info-card a { text-decoration: none; color: inherit; }
+.contact-info-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 3px; }
+.contact-info-value { font-size: 15px; font-weight: 600; color: var(--dark); }
+
+.hours-card {
+  background: var(--dark); border-radius: var(--radius);
+  padding: 1.75rem; margin-top: 6px;
+}
+.hours-card h4 { font-size: 14px; font-weight: 600; color: white; margin-bottom: 1rem; }
+.hours-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.hours-row span:first-child { font-size: 13px; color: rgba(255,255,255,0.45); }
+.hours-row span:last-child { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+.sla-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(22,163,74,0.1); border: 1px solid rgba(22,163,74,0.25);
+  color: #16a34a; padding: 6px 14px; border-radius: 30px;
+  font-size: 13px; font-weight: 600; margin-top: 14px;
+}
+.sla-badge::before { content: ''; width: 7px; height: 7px; background: #16a34a; border-radius: 50%; }
+
+/* FORM SIDE */
+.contact-form-card {
+  background: var(--off-white); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 2.5rem;
+}
+.contact-form-card h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--dark); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+.contact-form-card .sub { font-size: 14px; color: var(--muted); margin-bottom: 2rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.form-group label { font-size: 13px; font-weight: 600; color: var(--dark); }
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); font-size: 14px;
+  font-family: var(--font-sans); background: var(--white);
+  color: var(--dark); outline: none; transition: var(--transition);
+  -webkit-appearance: none; appearance: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,0.08);
+}
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-group select { cursor: pointer; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%236b6b7b' d='M6 8L1 3h10z'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+.form-submit {
+  width: 100%; background: var(--dark); color: white;
+  border: none; padding: 14px; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  font-family: var(--font-sans); transition: var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover { background: var(--red); transform: translateY(-1px); }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* MAP PLACEHOLDER */
+.map-section { background: var(--off-white); }
+.map-placeholder {
+  background: var(--dark); border-radius: var(--radius-lg);
+  height: 320px; display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; margin-top: 3rem;
+}
+.map-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px,
+    transparent 1px, transparent 40px
+  ), repeating-linear-gradient(
+    -45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px,
+    transparent 1px, transparent 40px
+  );
+}
+.map-pin {
+  text-align: center; position: relative; z-index: 1;
+}
+.map-pin-icon {
+  width: 52px; height: 52px; background: var(--red);
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  margin: 0 auto 1.5rem; box-shadow: 0 4px 20px rgba(230,57,70,0.4);
+}
+.map-pin-icon::after {
+  content: ''; position: absolute; inset: 8px;
+  background: white; border-radius: 50%;
+}
+.map-pin-label { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: white; }
+.map-pin-sublabel { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark"><span>V</span></div>
+    <span class="nav-logo-text">Vertex Tech</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="fees.html">Fees</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get in touch</a>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper">
+
+<div class="page-hero">
+  <div class="page-hero-shape" style="width:360px;height:360px;top:-80px;right:-80px;transform:rotate(28deg);"></div>
+  <div class="page-hero-inner">
+    <div class="badge" style="margin-bottom:1.25rem">Get in touch</div>
+    <h1>Ready to find your<br><em>next great hire?</em></h1>
+    <p>Tell us about the role — we'll get back to you within one business day with a clear plan.</p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section class="section contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- INFO -->
+      <div data-reveal>
+        <span class="section-tag">Reach us</span>
+        <h2 class="section-heading" style="margin-bottom:1.75rem">Let's start a<br>conversation</h2>
+
+        <div class="contact-info-block">
+          <a href="mailto:hr@vertextechsolution.in" style="text-decoration:none">
+            <div class="contact-info-card">
+              <div class="icon-box icon-box-dark">
+                <svg viewBox="0 0 24 24" style="stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-info-label">Email</div>
+                <div class="contact-info-value">hr@vertextechsolution.in</div>
+              </div>
+            </div>
+          </a>
+
+          <a href="tel:9909900988" style="text-decoration:none">
+            <div class="contact-info-card">
+              <div class="icon-box icon-box-dark">
+                <svg viewBox="0 0 24 24" style="stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.55 6.55l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-info-label">Phone</div>
+                <div class="contact-info-value">+91 9909900988</div>
+              </div>
+            </div>
+          </a>
+
+          <a href="http://www.vertextechsolution.in" target="_blank" style="text-decoration:none">
+            <div class="contact-info-card">
+              <div class="icon-box icon-box-dark">
+                <svg viewBox="0 0 24 24" style="stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round">
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="contact-info-label">Website</div>
+                <div class="contact-info-value">www.vertextechsolution.in</div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="hours-card" style="margin-top:20px">
+          <h4>Business hours</h4>
+          <div class="hours-row"><span>Monday – Friday</span><span>9:00 AM – 7:00 PM IST</span></div>
+          <div class="hours-row"><span>Saturday</span><span>10:00 AM – 2:00 PM IST</span></div>
+          <div class="hours-row"><span>Sunday</span><span>Closed</span></div>
+        </div>
+        <div class="sla-badge">We respond within 1 business day</div>
+      </div>
+
+      <!-- FORM -->
+      <div class="contact-form-card" data-reveal data-reveal-delay="150">
+        <h3>Send us a message</h3>
+        <p class="sub">Fill in the details below and we'll reach out to discuss how we can help.</p>
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" id="fname" name="fname" placeholder="Rahul" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" id="lname" name="lname" placeholder="Sharma" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Work email</label>
+            <input type="email" id="email" name="email" placeholder="rahul@company.com" required />
+          </div>
+          <div class="form-group">
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="company" placeholder="Acme Corp" />
+          </div>
+          <div class="form-group">
+            <label for="service">Service needed</label>
+            <select id="service" name="service">
+              <option value="">Select a service…</option>
+              <option value="talent">Talent Acquisition</option>
+              <option value="exec">Executive Search</option>
+              <option value="screening">Candidate Screening</option>
+              <option value="temp">Temporary Staffing</option>
+              <option value="other">Other / Not sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="msg">Tell us about the role</label>
+            <textarea id="msg" name="msg" placeholder="Job title, seniority, team size, timeline, any specific requirements…"></textarea>
+          </div>
+          <button class="form-submit" type="submit">Send message →</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP PLACEHOLDER -->
+<section class="section-sm map-section">
+  <div class="container">
+    <div class="map-placeholder">
+      <div class="map-pin">
+        <div class="map-pin-icon"></div>
+        <div class="map-pin-label">Vertex Tech Solutions</div>
+        <div class="map-pin-sublabel">India · vertextechsolution.in</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div style="background:var(--dark);padding:4rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:100%">
+  <div style="max-width:1080px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem">
+    <div>
+      <h2 style="font-family:var(--font-display);font-weight:800;font-size:clamp(1.4rem,2.5vw,2rem);color:white;letter-spacing:-0.02em;margin-bottom:0.4rem">No commitment to start</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,0.45)">Zero upfront cost. You pay only when a candidate joins your team.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="services.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7)">Our services</a>
+      <a href="fees.html" class="btn btn-primary">See fee structure</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="mark"><span>V</span></div>
+        <div class="name">Vertex Tech</div>
+      </div>
+      <p class="footer-brand-desc">Premier recruitment services — we find the people who move your business forward.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="fees.html">Fees</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Talent Acquisition</a></li>
+        <li><a href="services.html">Executive Search</a></li>
+        <li><a href="services.html">Candidate Screening</a></li>
+        <li><a href="services.html">Temporary Staffing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a></li>
+        <li><a href="tel:9909900988">9909900988</a></li>
+        <li><a href="http://www.vertextechsolution.in" target="_blank">vertextechsolution.in</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Vertex Tech Solutions. All rights reserved.</span>
+    <a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a>
+  </div>
+</footer>
+</div>
+
+<script src="shared.js"></script>
+</body>
+</html>

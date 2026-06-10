@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vertex Tech Solutions — Recruitment Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #e63946;
+    --red-dark: #c1121f;
+    --dark: #11111b;
+    --dark-2: #1c1c2e;
+    --off-white: #f7f6f2;
+    --muted: #6b6b7b;
+    --border: rgba(0,0,0,0.08);
+    --white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--dark);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,246,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 32px; height: 32px; background: var(--dark);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-mark span {
+    color: var(--red); font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 17px; line-height: 1;
+  }
+  .nav-logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--dark); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--dark); }
+  .nav-cta {
+    background: var(--dark); color: white;
+    padding: 8px 18px; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--red); }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    background: var(--dark);
+    display: flex; align-items: center;
+    padding: 5rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-shape-1 {
+    position: absolute; top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    background: var(--red); opacity: 0.15;
+    transform: rotate(30deg); border-radius: 40px;
+  }
+  .hero-shape-2 {
+    position: absolute; bottom: -100px; right: 120px;
+    width: 280px; height: 280px;
+    background: var(--red); opacity: 0.10;
+    transform: rotate(55deg); border-radius: 30px;
+  }
+  .hero-shape-3 {
+    position: absolute; top: 40%; left: -60px;
+    width: 180px; height: 180px;
+    background: var(--red); opacity: 0.07;
+    transform: rotate(20deg); border-radius: 24px;
+  }
+  .hero-inner { max-width: 780px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(230,57,70,0.15); border: 1px solid rgba(230,57,70,0.3);
+    color: #ff8a8a; padding: 5px 14px; border-radius: 20px;
+    font-size: 13px; font-weight: 500; margin-bottom: 2rem; letter-spacing: 0.02em;
+  }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--red); border-radius: 50%; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    color: white; line-height: 1.1; margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em { color: var(--red); font-style: normal; }
+  .hero-sub {
+    font-size: 17px; color: rgba(255,255,255,0.55);
+    max-width: 540px; line-height: 1.7; margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 12px 26px; border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.75);
+    padding: 12px 26px; border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
+  .hero-stats {
+    margin-top: 4rem; display: flex; gap: 3rem; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem;
+  }
+  .hero-stat .num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2.2rem; color: white; line-height: 1;
+  }
+  .hero-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    color: var(--red); text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .section-heading {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -0.02em; line-height: 1.2;
+    margin-bottom: 1rem; color: var(--dark);
+  }
+  .section-sub { font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.7; }
+
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: 15px; }
+  .about-pillars { display: flex; flex-direction: column; gap: 16px; }
+  .pillar {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 1.25rem; background: var(--off-white);
+    border-radius: var(--radius); border: 1px solid var(--border);
+  }
+  .pillar-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: var(--dark); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pillar-icon svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pillar h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .pillar p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* SERVICES */
+  #services { background: var(--off-white); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 3rem; }
+  .service-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.75rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .service-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .service-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; background: var(--red);
+    color: white; border-radius: 50%; font-size: 13px; font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+  .service-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; }
+  .service-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* PROCESS */
+  #process { background: var(--dark); }
+  #process .section-heading { color: white; }
+  #process .section-sub { color: rgba(255,255,255,0.45); }
+  #process .section-tag { color: #ff8a8a; }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; margin-top: 3rem; position: relative; }
+  .process-steps::before {
+    content: ''; position: absolute; top: 24px; left: 0; right: 0; height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  .step { padding: 0 1.5rem 0 0; }
+  .step-dot {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 14px; color: rgba(255,255,255,0.4);
+    background: var(--dark-2); margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+    transition: background 0.2s;
+  }
+  .step.active .step-dot { background: var(--red); color: white; border-color: var(--red); }
+  .step h4 { font-size: 14px; font-weight: 600; color: white; margin-bottom: 0.4rem; }
+  .step p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+  /* FEES */
+  #fees { background: var(--white); }
+  .fee-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+  .fee-card {
+    background: var(--dark); color: white;
+    border-radius: var(--radius); padding: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .fee-card::after {
+    content: ''; position: absolute; bottom: -40px; right: -40px;
+    width: 140px; height: 140px; background: var(--red);
+    opacity: 0.15; border-radius: 24px; transform: rotate(25deg);
+  }
+  .fee-big {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 4rem; color: var(--red); line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .fee-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 0.75rem; }
+  .fee-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+  .fee-details { display: flex; flex-direction: column; gap: 16px; }
+  .fee-detail-item {
+    padding: 1.25rem 1.5rem;
+    background: var(--off-white); border-radius: var(--radius);
+    border: 1px solid var(--border);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .fee-detail-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--red); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fee-detail-icon svg { width: 16px; height: 16px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .fee-detail-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .fee-detail-item p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* CONTACT */
+  #contact { background: var(--off-white); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; gap: 14px; align-items: center;
+    padding: 1.25rem; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .contact-item-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--dark); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-item-icon svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-item .lbl { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .contact-item .val { font-size: 14px; font-weight: 500; color: var(--dark); }
+  .contact-form { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+  .contact-form h3 { font-size: 18px; font-weight: 600; margin-bottom: 1.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .form-group label { font-size: 13px; font-weight: 500; color: var(--dark); }
+  .form-group input, .form-group textarea, .form-group select {
+    padding: 10px 14px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 14px;
+    font-family: 'Inter', sans-serif; background: var(--off-white);
+    color: var(--dark); outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--red);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%; background: var(--dark); color: white;
+    border: none; padding: 12px; border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 500; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--red); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.4);
+    padding: 2rem; text-align: center; font-size: 13px;
+  }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    section { padding: 3.5rem 1.25rem; }
+    .about-grid, .fee-layout, .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .process-steps { gap: 2rem; }
+    .process-steps::before { display: none; }
+    .hero { padding: 4rem 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark"><span>V</span></div>
+    <span class="nav-logo-text">Vertex Tech</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">How it works</a></li>
+    <li><a href="#fees">Fees</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-shape-1"></div>
+  <div class="hero-shape-2"></div>
+  <div class="hero-shape-3"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Recruitment specialists</div>
+    <h1>We find the people<br>who <em>move</em> your business</h1>
+    <p class="hero-sub">Vertex Tech Solutions manages your entire hiring process — from sourcing to placement — so you can stay focused on what you do best.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start hiring &#8594;</a>
+      <a href="#services" class="btn-ghost">See our services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">8.33%</div>
+        <div class="lbl">Transparent placement fee</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">90</div>
+        <div class="lbl">Day replacement guarantee</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">4</div>
+        <div class="lbl">Specialist service areas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <span class="section-tag">Who we are</span>
+    <h2 class="section-heading">Not just a recruitment agency</h2>
+    <p class="section-sub">We're a team of HR professionals who believe the right hire changes everything — for your company and for the candidate.</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>At Vertex Tech Solutions, we go beyond filling roles. We invest time in understanding your company culture, your team dynamics, and your long-term goals — then find people who genuinely fit.</p>
+        <p>By handling the full recruitment cycle, we free your team from the time drain of sourcing, screening, and coordinating. You stay in the loop, but we do the work.</p>
+        <p>Our commitment doesn't end at the offer letter. With our 90-day replacement guarantee, you can hire with confidence.</p>
+      </div>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4>Long-term partnerships</h4>
+            <p>We build lasting relationships with clients, not transactional one-offs.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4>Performance-driven fees</h4>
+            <p>You pay only when a candidate successfully joins your team.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>Quality guarantee</h4>
+            <p>Free replacement within 90 days if the placement doesn't work out.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <span class="section-tag">What we offer</span>
+    <h2 class="section-heading">Services tailored to<br>your hiring needs</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Talent acquisition</h3>
+        <p>We source, evaluate, and present the strongest candidates for your open positions — across levels and functions.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Executive search</h3>
+        <p>Discreet, targeted search for senior leadership roles where the right person can define the direction of your company.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Candidate screening</h3>
+        <p>Rigorous background checks, skills assessments, and culture-fit evaluations before anyone reaches your desk.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Temporary staffing</h3>
+        <p>Flexible talent for project-based work, seasonal peaks, or cover. On-demand, without the long-term overhead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-heading">From brief to hire,<br>we handle it</h2>
+    <p class="section-sub">A clear, efficient process that keeps you informed at every stage without pulling you away from your work.</p>
+    <div class="process-steps">
+      <div class="step active">
+        <div class="step-dot">01</div>
+        <h4>Intake call</h4>
+        <p>We learn your role, team culture, and what success looks like.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">02</div>
+        <h4>Sourcing</h4>
+        <p>We tap our network and proactively headhunt the right candidates.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">03</div>
+        <h4>Screening</h4>
+        <p>Every shortlisted candidate is vetted for skills and culture fit.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">04</div>
+        <h4>Shortlist</h4>
+        <p>You receive a curated list of top candidates — no noise.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">05</div>
+        <h4>Placement</h4>
+        <p>We coordinate interviews, offers, and onboarding support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEES -->
+<section id="fees">
+  <div class="container">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-heading">Transparent, performance-based fees</h2>
+    <p class="section-sub">No retainers, no surprises. You pay when a hire succeeds.</p>
+    <div class="fee-layout">
+      <div class="fee-card">
+        <div class="fee-big">8.33%</div>
+        <h3>Placement fee</h3>
+        <p>A single fee of 8.33% of the successfully placed candidate's first-year gross salary. Charged only once the candidate starts and completes their first 90 days.</p>
+      </div>
+      <div class="fee-details">
+        <div class="fee-detail-item">
+          <div class="fee-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>90-day replacement guarantee</h4>
+            <p>If a placed candidate leaves within 90 days, we find a replacement at no extra charge.</p>
+          </div>
+        </div>
+        <div class="fee-detail-item">
+          <div class="fee-detail-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4>No upfront payments</h4>
+            <p>You only pay once a candidate successfully joins your team — zero risk to start.</p>
+          </div>
+        </div>
+        <div class="fee-detail-item">
+          <div class="fee-detail-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h4>Flexible terms</h4>
+            <p>Need a custom arrangement? Let's talk — we're open to finding a structure that works for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <span class="section-tag">Get in touch</span>
+    <h2 class="section-heading">Ready to find your next hire?</h2>
+    <p class="section-sub">Tell us about the role — we'll get back to you within one business day.</p>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="lbl">Email</div>
+            <div class="val">hr@vertextechsolution.in</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.55 6.55l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="lbl">Phone</div>
+            <div class="val">9909900988</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <div class="lbl">Website</div>
+            <div class="val">www.vertextechsolution.in</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Send us a message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" placeholder="Rahul" />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" placeholder="Sharma" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Work email</label>
+          <input type="email" id="email" placeholder="rahul@company.com" />
+        </div>
+        <div class="form-group">
+          <label for="service">Service needed</label>
+          <select id="service">
+            <option value="">Select a service...</option>
+            <option>Talent acquisition</option>
+            <option>Executive search</option>
+            <option>Candidate screening</option>
+            <option>Temporary staffing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="msg">Tell us about the role</label>
+          <textarea id="msg" placeholder="Job title, team size, timeline..."></textarea>
+        </div>
+        <button class="form-submit" type="button">Send message &#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 <a href="#">Vertex Tech Solutions</a> &nbsp;·&nbsp; <a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a> &nbsp;·&nbsp; <a href="tel:9909900988">9909900988</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Vertex Tech Solutions</title>
+<meta name="description" content="Explore Vertex Tech Solutions' portfolio of successful placements across technology, finance, healthcare, and more." />
+<link rel="stylesheet" href="shared.css" />
+<style>
+/* FILTER BAR */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 3rem; }
+.filter-btn {
+  padding: 8px 18px; border-radius: 30px; font-size: 14px; font-weight: 500;
+  border: 1.5px solid var(--border); background: transparent; cursor: pointer;
+  color: var(--muted); font-family: var(--font-sans); transition: var(--transition);
+}
+.filter-btn:hover { border-color: var(--dark); color: var(--dark); }
+.filter-btn.active { background: var(--dark); color: white; border-color: var(--dark); }
+
+/* PORTFOLIO GRID */
+.portfolio-section { background: var(--white); }
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 22px;
+}
+.portfolio-card {
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--off-white); border: 1px solid var(--border);
+  transition: var(--transition); cursor: pointer;
+}
+.portfolio-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: transparent; }
+
+.portfolio-card-visual {
+  height: 200px; background: var(--dark);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.portfolio-card-visual .big-num {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 6rem; color: rgba(255,255,255,0.05); line-height: 1;
+  position: absolute;
+}
+.portfolio-card-visual .accent-shape {
+  position: absolute; border-radius: 20px; background: var(--red); opacity: 0.15;
+  transform: rotate(30deg);
+}
+.portfolio-card-icon {
+  width: 60px; height: 60px; background: var(--red);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+}
+.portfolio-card-icon svg { width: 28px; height: 28px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.portfolio-card-body { padding: 1.5rem; }
+.portfolio-card-tag {
+  font-size: 11px; font-weight: 600; color: var(--red);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.6rem;
+}
+.portfolio-card-body h3 { font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 0.6rem; }
+.portfolio-card-body p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; }
+.portfolio-card-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+.meta-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--muted); font-weight: 500;
+}
+.meta-pill::before {
+  content: ''; width: 5px; height: 5px;
+  background: var(--red); border-radius: 50%;
+}
+
+/* CASE STUDY STRIP */
+.case-studies { background: var(--off-white); }
+.case-study-item {
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 3rem; align-items: start;
+  padding: 3rem 0; border-bottom: 1px solid var(--border);
+}
+.case-study-item:last-child { border-bottom: none; }
+.cs-label { font-size: 11px; font-weight: 600; color: var(--red); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.cs-client { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--dark); line-height: 1.15; }
+.cs-industry { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.cs-body h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.6rem; color: var(--dark); }
+.cs-body p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.cs-results { display: flex; gap: 2rem; flex-wrap: wrap; }
+.cs-result .rnum { font-family: var(--font-display); font-weight: 800; font-size: 1.8rem; color: var(--red); line-height: 1; }
+.cs-result .rlbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+@media (max-width: 900px) {
+  .portfolio-grid { grid-template-columns: repeat(2,1fr); }
+  .case-study-item { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+@media (max-width: 580px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+}
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark"><span>V</span></div>
+    <span class="nav-logo-text">Vertex Tech</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="fees.html">Fees</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get in touch</a>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper">
+
+<div class="page-hero">
+  <div class="page-hero-shape" style="width:380px;height:380px;top:-80px;right:-80px;transform:rotate(28deg);"></div>
+  <div class="page-hero-shape" style="width:160px;height:160px;bottom:-30px;left:5%;transform:rotate(15deg);opacity:0.07;"></div>
+  <div class="page-hero-inner">
+    <div class="badge" style="margin-bottom:1.25rem">Our work</div>
+    <h1>Placements that<br>made a <em>difference</em></h1>
+    <p>A selection of the roles we've successfully filled — across technology, finance, healthcare, and operations.</p>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="section portfolio-section">
+  <div class="container">
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All placements</button>
+      <button class="filter-btn" data-filter="tech">Technology</button>
+      <button class="filter-btn" data-filter="finance">Finance</button>
+      <button class="filter-btn" data-filter="health">Healthcare</button>
+      <button class="filter-btn" data-filter="ops">Operations</button>
+      <button class="filter-btn" data-filter="exec">Executive</button>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" data-category="tech" data-reveal>
+        <div class="portfolio-card-visual">
+          <div class="big-num">01</div>
+          <div class="accent-shape" style="width:160px;height:160px;top:-40px;right:-40px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Technology</div>
+          <h3>Senior Full-Stack Engineers — FinTech Scale-Up</h3>
+          <p>Placed 6 senior engineers with React and Node.js expertise within 45 days, enabling a critical product launch.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">6 placements</span>
+            <span class="meta-pill">45 days</span>
+            <span class="meta-pill">Talent Acquisition</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-category="exec" data-reveal data-reveal-delay="100">
+        <div class="portfolio-card-visual">
+          <div class="big-num">02</div>
+          <div class="accent-shape" style="width:180px;height:180px;bottom:-60px;left:-40px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a7 7 0 0 1 14 0v2"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Executive</div>
+          <h3>CTO Placement — Series B Healthcare SaaS</h3>
+          <p>Identified and placed a CTO from a competing firm through discreet headhunting. Candidate remains in role 18+ months.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">1 placement</span>
+            <span class="meta-pill">28 days</span>
+            <span class="meta-pill">Executive Search</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-category="health" data-reveal data-reveal-delay="200">
+        <div class="portfolio-card-visual">
+          <div class="big-num">03</div>
+          <div class="accent-shape" style="width:140px;height:140px;top:-20px;right:-20px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Healthcare</div>
+          <h3>Nursing Staff Scale-Up — Private Hospital Group</h3>
+          <p>Delivered 22 qualified nursing professionals during a critical Q4 patient surge across 3 hospital locations.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">22 placements</span>
+            <span class="meta-pill">3 weeks</span>
+            <span class="meta-pill">Temporary Staffing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-category="finance" data-reveal>
+        <div class="portfolio-card-visual">
+          <div class="big-num">04</div>
+          <div class="accent-shape" style="width:200px;height:200px;bottom:-80px;right:-40px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Finance</div>
+          <h3>Finance Team Build-Out — NBFC Startup</h3>
+          <p>Assembled a complete 8-person finance team (CFO, controllers, analysts) for a new non-banking financial company launch.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">8 placements</span>
+            <span class="meta-pill">60 days</span>
+            <span class="meta-pill">Talent Acquisition</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-category="ops" data-reveal data-reveal-delay="100">
+        <div class="portfolio-card-visual">
+          <div class="big-num">05</div>
+          <div class="accent-shape" style="width:160px;height:160px;top:-30px;left:-30px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Operations</div>
+          <h3>Ops Leadership — National Logistics Firm</h3>
+          <p>Placed a VP of Operations and 3 Regional Managers to support a national expansion into 12 new cities.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">4 placements</span>
+            <span class="meta-pill">35 days</span>
+            <span class="meta-pill">Executive Search</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card" data-category="tech" data-reveal data-reveal-delay="200">
+        <div class="portfolio-card-visual">
+          <div class="big-num">06</div>
+          <div class="accent-shape" style="width:180px;height:180px;top:-40px;right:-50px;"></div>
+          <div class="portfolio-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-tag">Technology</div>
+          <h3>Cybersecurity Specialists — Enterprise Software</h3>
+          <p>Sourced and placed 4 cybersecurity engineers for a BFSI enterprise preparing for ISO 27001 certification.</p>
+          <div class="portfolio-card-meta">
+            <span class="meta-pill">4 placements</span>
+            <span class="meta-pill">21 days</span>
+            <span class="meta-pill">Candidate Screening</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="section case-studies">
+  <div class="container">
+    <span class="section-tag">Case studies</span>
+    <h2 class="section-heading">Deeper look at our<br>best placements</h2>
+
+    <div class="case-study-item" data-reveal>
+      <div>
+        <div class="cs-label">Case Study 01</div>
+        <div class="cs-client">FinServe India</div>
+        <div class="cs-industry">FinTech · Bengaluru</div>
+      </div>
+      <div class="cs-body">
+        <h4>Challenge</h4>
+        <p>FinServe needed to scale their engineering team from 12 to 30 in under two months ahead of a major product launch. Previous agencies had provided poor-quality candidates that didn't pass technical interviews.</p>
+        <h4>Our approach</h4>
+        <p>We embedded a dedicated recruiter into their hiring committee, ran structured technical screening with their lead architect, and proactively headhunted candidates from competing firms.</p>
+        <div class="cs-results">
+          <div class="cs-result"><div class="rnum">18</div><div class="rlbl">Engineers placed</div></div>
+          <div class="cs-result"><div class="rnum">42d</div><div class="rlbl">To full team</div></div>
+          <div class="cs-result"><div class="rnum">0</div><div class="rlbl">Failed probations</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-study-item" data-reveal>
+      <div>
+        <div class="cs-label">Case Study 02</div>
+        <div class="cs-client">MediCare Group</div>
+        <div class="cs-industry">Healthcare · Mumbai</div>
+      </div>
+      <div class="cs-body">
+        <h4>Challenge</h4>
+        <p>A sudden surge in patient volume required MediCare to deploy 20+ qualified nursing staff across three hospitals within 3 weeks — without compromising on clinical credentials or background checks.</p>
+        <h4>Our approach</h4>
+        <p>We activated our pre-vetted temporary staffing pool, conducted expedited credential verification, and coordinated staggered deployment to all three sites in parallel.</p>
+        <div class="cs-results">
+          <div class="cs-result"><div class="rnum">22</div><div class="rlbl">Nurses deployed</div></div>
+          <div class="cs-result"><div class="rnum">19d</div><div class="rlbl">Total turnaround</div></div>
+          <div class="cs-result"><div class="rnum">100%</div><div class="rlbl">Compliance rate</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-study-item" data-reveal>
+      <div>
+        <div class="cs-label">Case Study 03</div>
+        <div class="cs-client">LogiCore</div>
+        <div class="cs-industry">Logistics · Ahmedabad</div>
+      </div>
+      <div class="cs-body">
+        <h4>Challenge</h4>
+        <p>Expanding nationally required LogiCore to find a VP of Operations with multi-city experience — a rare profile in their tier-2 city base, complicated by confidentiality requirements.</p>
+        <h4>Our approach</h4>
+        <p>We ran a discreet executive search, approached 40+ passive candidates, conducted psychometric assessments, and presented a final shortlist of 4 exceptional leaders within 3 weeks.</p>
+        <div class="cs-results">
+          <div class="cs-result"><div class="rnum">28d</div><div class="rlbl">To shortlist</div></div>
+          <div class="cs-result"><div class="rnum">40+</div><div class="rlbl">Candidates assessed</div></div>
+          <div class="cs-result"><div class="rnum">4</div><div class="rlbl">Final candidates</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="background:var(--dark);padding:5rem 2rem;text-align:center">
+  <span class="section-tag" style="color:#ff8a8a;margin-bottom:1.25rem;display:inline-flex">Your success story</span>
+  <h2 style="font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:white;margin-bottom:1rem;letter-spacing:-0.02em">Let's add your company to the list</h2>
+  <p style="font-size:17px;color:rgba(255,255,255,0.45);max-width:500px;margin:0 auto 2rem">Tell us about the role you're hiring for and we'll get back to you within one business day.</p>
+  <a href="contact.html" class="btn btn-primary">Start a conversation →</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="mark"><span>V</span></div>
+        <div class="name">Vertex Tech</div>
+      </div>
+      <p class="footer-brand-desc">Premier recruitment services — we find the people who move your business forward.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="fees.html">Fees</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Talent Acquisition</a></li>
+        <li><a href="services.html">Executive Search</a></li>
+        <li><a href="services.html">Candidate Screening</a></li>
+        <li><a href="services.html">Temporary Staffing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a></li>
+        <li><a href="tel:9909900988">9909900988</a></li>
+        <li><a href="http://www.vertextechsolution.in" target="_blank">vertextechsolution.in</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Vertex Tech Solutions. All rights reserved.</span>
+    <a href="mailto:hr@vertextechsolution.in">hr@vertextechsolution.in</a>
+  </div>
+</footer>
+</div>
+
+<script src="shared.js"></script>
+</body>
+</html>
